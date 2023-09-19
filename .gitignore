@@ -1,0 +1,62 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+
+
+# Ignore static and media files
+static/
+media/
+
+# Ignore virtual environment
+venv/
+env/
+*.env
+
+# Ignore local settings
+local_settings.py
+
+# Ignore secret keys
+secret_key.txt
+
+# Ignore log files
+*.log
+
+# Ignore temporary and generated files
+*.bak
+*.swp
+*.~
+
+# Ignore IDE-specific directories
+.vscode/
+.idea/
+
+# Ignore pycodestyle configuration
+.pylintrc
+
+# Ignore database migrations, as they can be regenerated
+**/migrations/
+
+# Ignore compiled JavaScript and CSS
+*.js
+*.css
+
+# Ignore compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Ignore Docker files
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+

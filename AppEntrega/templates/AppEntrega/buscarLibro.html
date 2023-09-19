@@ -1,0 +1,35 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+<form action="{% url 'buscar' %}" method="GET">
+    
+    <input type="text" name="titulo" >
+
+    <input type="submit" value="Buscar">
+
+</form>
+
+{% if mensaje %}
+
+<p style="color: red;">{{mensaje}}</p>
+
+{% endif %}
+
+{% if titulo %}
+
+<p> EStamos buscando el: {{titulo}}</p>
+
+<ul>
+{% for objeto in mis_libros %}
+    <li>{{objeto.titulo}}</li>
+    <li>{{objeto.autor}}</li>
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
+{% endblock %}
+
+
+

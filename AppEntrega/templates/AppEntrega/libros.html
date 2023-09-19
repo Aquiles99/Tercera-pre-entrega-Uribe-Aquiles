@@ -1,0 +1,30 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+{% for objeto in libros %}
+    <!-- Mostrar la información del objeto aquí -->
+   <p>
+    {{ objeto.titulo }}
+   </p>
+{% endfor %}
+
+ 
+
+<body style="background-color: rgb(0, 255, 119);">
+
+<form action="" method="POST">{% csrf_token%}
+
+    <table>
+
+        {{ miFormulario.as_table }}
+    </table>
+<input type="submit", value="Enviar">
+
+</form>
+
+<h1>Libros</h1>
+<p>Libros que te pueden interesar</p>
+
+</body>
+
+{% endblock %}

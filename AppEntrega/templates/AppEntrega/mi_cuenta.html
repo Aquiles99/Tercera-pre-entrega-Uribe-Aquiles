@@ -1,0 +1,30 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+{% for objeto in mis_cuentas %}
+    <!-- Mostrar la información del objeto aquí -->
+   <p>
+    {{ objeto.email }}
+   </p>
+{% endfor %}
+
+ 
+
+<body style="background-color: blue;">
+
+<form action="" method="POST">{% csrf_token%}
+
+    <table>
+
+        {{ miFormulario.as_table }}
+    </table>
+<input type="submit", value="Enviar">
+
+</form>
+
+<h1>Mi cuenta</h1>
+<p>Aca va la info de tu cuenta</p>
+
+</body>
+
+{% endblock %}
