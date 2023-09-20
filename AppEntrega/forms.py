@@ -24,3 +24,8 @@ class SucursalesFormulario(forms.Form):
 class ContactoFormulario(forms.Form):
     nombre= forms.CharField(max_length=30)
     email= forms.EmailField()
+
+class Crear_cuentaFormulario(forms.Form):
+        nombre= forms.CharField(max_length=30)
+        email= forms.EmailField()
+

@@ -21,5 +21,8 @@ class Contacto(models.Model):
     nombre= models.CharField(max_length=30)
     email= models.EmailField()
     
+class Crear_cuenta(models.Model):
+     nombre= models.CharField(max_length=30)
+     email= models.EmailField()
 
 

@@ -9,8 +9,8 @@ def inicio(request):
     return render(request, "AppEntrega/index.html")
 
 
-def Crear_cuenta(request):
-    return render(request, "AppEntrega/crear_cuenta.html")
+# def Crear_cuenta(request):
+#     return render(request, "AppEntrega/crear_cuenta.html")
 
 def buscarLibro(request):
       
@@ -115,6 +115,28 @@ def sucursales(request):
  
       return render(request, "AppEntrega/sucursales.html", {"miFormulario": miFormulario, "sucursales":mis_sucursales})
 
+
+
+def crear_cuentaFormulario(request):
+      return render(request, "AppCoder/cursoFormulario.html")
+
+def crear_cuenta(request):
+      nuevas_cuentas= Crear_cuenta.objects.all()
+ 
+      if request.method == "POST":
+ 
+            miFormulario = Crear_cuentaFormulario(request.POST) # Aqui me llega la informacion del html
+            print(miFormulario)
+ 
+            if miFormulario.is_valid:
+                  informacion = miFormulario.cleaned_data
+                  curso = Crear_cuenta(nombre=informacion["nombre"], email=informacion["email"])
+                  curso.save()
+                  return redirect("Crear_cuenta")
+      else:
+            miFormulario = Crear_cuentaFormulario()
+ 
+      return render(request, "AppEntrega/crear_cuenta.html", {"miFormulario": miFormulario, "nuevas_cuentas":nuevas_cuentas})
 
 
 
