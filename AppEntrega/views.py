@@ -2,16 +2,125 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from AppEntrega.forms import *
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+
 
 # Crear tus vistas aquí.
 
+@login_required
 def inicio(request):
     return render(request, "AppEntrega/index.html")
 
 
-# def Crear_cuenta(request):
-#     return render(request, "AppEntrega/crear_cuenta.html")
+def login_request(request):
+      if request.method == "POST":
 
+       form = AuthenticationForm (request, data = request.POST)
+
+       if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            contra = form.cleaned_data.get('password')
+
+            user = authenticate(username=usuario, password=contra)
+
+            if user is not None:
+                  login(request, user)
+
+                  return render(request,"AppEntrega/index.html", {"mensaje":f"Bienvenido {usuario}"})
+            
+            else:
+                  print("uno")
+                  form = AuthenticationForm()
+                  return render(request,"AppEntrega/login.html", {'form': form})
+            
+       else:
+                  print("dos")
+                  form = AuthenticationForm()
+                  return render(request,"AppEntrega/login.html", {'form': form})
+      
+      print("NO fue un post")
+      form = AuthenticationForm()
+      return render(request,"AppEntrega/login.html", {'form': form})
+
+#crear vista de registro
+
+def register(request):
+
+      if request.method == 'POST':
+
+            form = UserRegisterForm(request.POST)
+
+            if form.is_valid():
+
+             username = form.cleaned_data['username']
+             form.save()
+             return redirect("Login")
+      
+      else:
+            form = UserRegisterForm()
+      
+      return render(request,"AppEntrega/registro.html" , {"form":form})
+
+def custom_logout(request):
+    # Realiza el cierre de sesión
+    logout(request)
+
+    return redirect("Login")
+
+#Edicion de usuario
+@login_required
+def editarPerfil(request):
+
+      #login
+      usuario= request.user
+
+      if request.method == "POST":
+            miFormulario = UserEditForm(request.POST)
+            if miFormulario.is_valid:
+
+                  informacion = miFormulario.cleaned_date
+
+                  #notificacion de los datos a editar
+
+                  usuario.emial = informacion["email"]
+                  usuario.password1 =  informacion["password1"]
+                  usuario.password = informacion["password1"]
+                  usuario.save()
+            
+                  return render(request, "AppEntrega/login.html")
+
+      else:
+            miFormulario= UserEditForm(initial={"email":usuario.email})
+
+      return render(request, "AppEntrega/login.html", {"miFormulario":miFormulario, "uruario":usuario})
+
+@login_required
+def agregarAvatar(request):
+
+      if request.method == "POST":
+
+            miFormulario= AvatarFormulario(request.POST, request.FILES)
+
+            if miFormulario.is_valid():
+
+                  u = User.objects.get(username=request.user)
+
+                  avatar = Avatar (user=u, image= miFormulario.cleaned_data["image"])
+
+                  avatar.save()
+
+                  return render(request, "AppEntrega/login.html")
+            
+      else:
+            miFormulario= AvatarFormulario()
+
+      return render(request, "AppEntrega/agregarAvatar.html" , {"miFormulario":miFormulario})
+
+
+
+#LIBROS
 def buscarLibro(request):
       
       return render(request, "AppEntrega/buscarLibro.html")

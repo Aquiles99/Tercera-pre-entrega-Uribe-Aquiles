@@ -10,3 +10,5 @@ admin.site.register(Libros)
 admin.site.register(Contacto)
 
 admin.site.register(Sucursales)
+
+admin.site.register(Avatar)
