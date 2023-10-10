@@ -5,118 +5,22 @@ from AppEntrega.forms import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
+#MI BLOG PERSONAL
+def mi_vista(request):
+    return render(request, 'mi_template.html')
 
 # Crear tus vistas aquí.
 
-@login_required
+#@login_required
 def inicio(request):
     return render(request, "AppEntrega/index.html")
 
 
-def login_request(request):
-      if request.method == "POST":
 
-       form = AuthenticationForm (request, data = request.POST)
-
-       if form.is_valid():
-            usuario = form.cleaned_data.get('username')
-            contra = form.cleaned_data.get('password')
-
-            user = authenticate(username=usuario, password=contra)
-
-            if user is not None:
-                  login(request, user)
-
-                  return render(request,"AppEntrega/index.html", {"mensaje":f"Bienvenido {usuario}"})
-            
-            else:
-                  print("uno")
-                  form = AuthenticationForm()
-                  return render(request,"AppEntrega/login.html", {'form': form})
-            
-       else:
-                  print("dos")
-                  form = AuthenticationForm()
-                  return render(request,"AppEntrega/login.html", {'form': form})
-      
-      print("NO fue un post")
-      form = AuthenticationForm()
-      return render(request,"AppEntrega/login.html", {'form': form})
-
-#crear vista de registro
-
-def register(request):
-
-      if request.method == 'POST':
-
-            form = UserRegisterForm(request.POST)
-
-            if form.is_valid():
-
-             username = form.cleaned_data['username']
-             form.save()
-             return redirect("Login")
-      
-      else:
-            form = UserRegisterForm()
-      
-      return render(request,"AppEntrega/registro.html" , {"form":form})
-
-def custom_logout(request):
-    # Realiza el cierre de sesión
-    logout(request)
-
-    return redirect("Login")
-
-#Edicion de usuario
-@login_required
-def editarPerfil(request):
-
-      #login
-      usuario= request.user
-
-      if request.method == "POST":
-            miFormulario = UserEditForm(request.POST)
-            if miFormulario.is_valid:
-
-                  informacion = miFormulario.cleaned_date
-
-                  #notificacion de los datos a editar
-
-                  usuario.emial = informacion["email"]
-                  usuario.password1 =  informacion["password1"]
-                  usuario.password = informacion["password1"]
-                  usuario.save()
-            
-                  return render(request, "AppEntrega/login.html")
-
-      else:
-            miFormulario= UserEditForm(initial={"email":usuario.email})
-
-      return render(request, "AppEntrega/login.html", {"miFormulario":miFormulario, "uruario":usuario})
-
-@login_required
-def agregarAvatar(request):
-
-      if request.method == "POST":
-
-            miFormulario= AvatarFormulario(request.POST, request.FILES)
-
-            if miFormulario.is_valid():
-
-                  u = User.objects.get(username=request.user)
-
-                  avatar = Avatar (user=u, image= miFormulario.cleaned_data["image"])
-
-                  avatar.save()
-
-                  return render(request, "AppEntrega/login.html")
-            
-      else:
-            miFormulario= AvatarFormulario()
-
-      return render(request, "AppEntrega/agregarAvatar.html" , {"miFormulario":miFormulario})
 
 
 
@@ -129,7 +33,7 @@ def buscar(request):
       if request.GET["titulo"]:
 
             titulo= request.GET['titulo']
-            mis_libros = Libros.objects.filter(titulo__icontains=titulo)
+            mis_libros = Libro.objects.filter(titulo__icontains=titulo)
 
             if len(mis_libros) != 0:
              return render(request, "AppEntrega/buscarLibro.html",{"titulo":titulo, "mis_libros":mis_libros} )
@@ -148,104 +52,138 @@ def buscar(request):
 
 #Creamos formularios para nuestras class.
 
-def Formulario(request):
-      return render(request, "AppCoder/cursoFormulario.html")
 
-def mi_cuenta(request):
-      mis_cuentas= Mi_cuenta.objects.all()
+# def libros(request):
+#       mis_libros= Libro.objects.all()
  
-      if request.method == "POST":
+#       if request.method == "POST":
  
-            miFormulario = Mi_cuentaFormulario(request.POST) # Aqui me llega la informacion del html
-            print(miFormulario)
+#             miFormulario = LibrosFormulario(request.POST) # Aqui me llega la informacion del html
+#             print(miFormulario)
  
-            if miFormulario.is_valid:
-                  informacion = miFormulario.cleaned_data
-                  curso = Mi_cuenta(nombre=informacion["nombre"], apellido=informacion["apellido"], email=informacion["email"])
-                  curso.save()
-                  return redirect("Mi_cuenta")
-      else:
-            miFormulario = Mi_cuentaFormulario()
+#             if miFormulario.is_valid:
+#                   informacion = miFormulario.cleaned_data
+#                   curso = Libro(titulo=informacion["titulo"], genero=informacion["genero"], autor=informacion["autor"])
+#                   curso.save()
+#                   return redirect("Libros")
+#       else:
+#             miFormulario = LibrosFormulario()
  
-      return render(request, "AppEntrega/mi_cuenta.html", {"miFormulario": miFormulario, "mis_cuentas":mis_cuentas})
-
-def libros(request):
-      mis_libros= Libros.objects.all()
- 
-      if request.method == "POST":
- 
-            miFormulario = LibrosFormulario(request.POST) # Aqui me llega la informacion del html
-            print(miFormulario)
- 
-            if miFormulario.is_valid:
-                  informacion = miFormulario.cleaned_data
-                  curso = Libros(titulo=informacion["titulo"], genero=informacion["genero"], autor=informacion["autor"])
-                  curso.save()
-                  return redirect("Libros")
-      else:
-            miFormulario = LibrosFormulario()
- 
-      return render(request, "AppEntrega/libros.html",{"miFormulario":miFormulario, "libros":mis_libros})
-
-def contacto(request):
-      mis_contactos= Contacto.objects.all()
- 
-      if request.method == "POST":
- 
-            miFormulario = ContactoFormulario(request.POST) # Aqui me llega la informacion del html
-            print(miFormulario)
- 
-            if miFormulario.is_valid:
-                  informacion = miFormulario.cleaned_data
-                  curso = Contacto(nombre=informacion["nombre"], email=informacion["email"])
-                  curso.save()
-                  return redirect("Contacto")
-      else:
-            miFormulario = ContactoFormulario()
- 
-      return render(request, "AppEntrega/contacto.html", {"miFormulario": miFormulario, "contactos":mis_contactos})
-
-def sucursales(request):
-
-      mis_sucursales= Sucursales.objects.all()
- 
-      if request.method == "POST":
- 
-            miFormulario = SucursalesFormulario(request.POST) # Aqui me llega la informacion del html
-            print(miFormulario)
- 
-            if miFormulario.is_valid:
-                  informacion = miFormulario.cleaned_data
-                  curso = Sucursales(nombre=informacion["nombre"], domicilio=informacion["domicilio"])
-                  curso.save()
-                  return redirect("Sucursales")
-      else:
-            miFormulario = SucursalesFormulario()
- 
-      return render(request, "AppEntrega/sucursales.html", {"miFormulario": miFormulario, "sucursales":mis_sucursales})
+#       return render(request, "AppEntrega/libros.html",{"miFormulario":miFormulario, "libros":mis_libros})
 
 
+#lista basada en clases (CRUD)
+#CRUD de libro
+class ListaLibros(LoginRequiredMixin, ListView):
+    model= Libro
+    template_name= "AppEntrega/listaLibros.html"
+    context_object_name= 'libros'
 
-def crear_cuentaFormulario(request):
-      return render(request, "AppCoder/cursoFormulario.html")
+class CrearLibros(LoginRequiredMixin, CreateView):
+    model= Libro
+    form_class= LibroForm
+    template_name= "AppEntrega/libros.html"
+    success_url = reverse_lazy("Libros_lista")
 
-def crear_cuenta(request):
-      nuevas_cuentas= Crear_cuenta.objects.all()
- 
-      if request.method == "POST":
- 
-            miFormulario = Crear_cuentaFormulario(request.POST) # Aqui me llega la informacion del html
-            print(miFormulario)
- 
-            if miFormulario.is_valid:
-                  informacion = miFormulario.cleaned_data
-                  curso = Crear_cuenta(nombre=informacion["nombre"], email=informacion["email"])
-                  curso.save()
-                  return redirect("Crear_cuenta")
-      else:
-            miFormulario = Crear_cuentaFormulario()
- 
-      return render(request, "AppEntrega/crear_cuenta.html", {"miFormulario": miFormulario, "nuevas_cuentas":nuevas_cuentas})
+class LibroDetailView(DetailView):
+      model = Libro
+      template_name = "AppEntrega/detalleLibro.html"  # Ruta a la plantilla de detalles
+      context_object_name = 'libro'  # Nombre del objeto en el contexto
+
+class ActualizarLibros(LoginRequiredMixin, UpdateView):
+      model= Libro
+      form_class= LibroForm
+      template_name= "AppEntrega/libros.html"
+      success_url = reverse_lazy("Libros_lista")
+
+class BorrarLibros(LoginRequiredMixin, DeleteView):
+    model= Libro
+    template_name = 'AppEntrega/borrar_Libro.html'
+    success_url = reverse_lazy('Libros_lista')
+
+#CRUD manga
+class ListaManga(LoginRequiredMixin, ListView):
+     model= Manga
+     template_name= "AppEntrega/listaManga.html"
+     context_object_name= 'mangas'
+
+class CrearMangas(LoginRequiredMixin, CreateView):
+       model= Manga
+       form_class= MangaForm
+       template_name= "AppEntrega/manga.html"
+       success_url = reverse_lazy("Manga_lista")
 
 
+class MangaDetailView(DetailView):
+       model = Manga
+       template_name = "AppEntrega/detalleManga.html"  # Ruta a la plantilla de detalles
+       context_object_name = 'manga'  # Nombre del objeto en el contexto
 
+class ActualizarMangas(LoginRequiredMixin, UpdateView):
+       model= Manga
+       form_class= MangaForm
+       template_name= "AppEntrega/manga.html"
+       success_url = reverse_lazy("Manga_lista")
+
+class BorrarMangas(LoginRequiredMixin, DeleteView):
+     model= Manga
+     template_name = 'AppEntrega/borrar_Manga.html'
+     success_url = reverse_lazy('Manga_lista')    
+
+#CRUD figuras
+class ListaFigura(LoginRequiredMixin, ListView):
+     model= Figura
+     template_name= "AppEntrega/listaFigura.html"
+     context_object_name= 'figuras'
+
+class CrearFiguras(LoginRequiredMixin, CreateView):
+       model= Figura
+       form_class= FiguraForm
+       template_name= "AppEntrega/figura.html"
+       success_url = reverse_lazy("Figura_lista")
+
+
+class FiguraDetailView(DetailView):
+       model = Figura
+       template_name = "AppEntrega/detalleFigura.html"  # Ruta a la plantilla de detalles
+       context_object_name = 'figura'  # Nombre del objeto en el contexto
+
+class ActualizarFiguras(LoginRequiredMixin, UpdateView):
+       model= Figura
+       form_class= FiguraForm
+       template_name= "AppEntrega/figura.html"
+       success_url = reverse_lazy("Figura_lista")
+
+class BorrarFiguras(LoginRequiredMixin, DeleteView):
+     model= Figura
+     template_name = 'AppEntrega/borrar_Figura.html'
+     success_url = reverse_lazy('Figura_lista')    
+
+#CRUD juegos de mesa
+class ListaJuego(LoginRequiredMixin, ListView):
+     model= Juego
+     template_name= "AppEntrega/listajuegos.html"
+     context_object_name= 'juegos'
+
+class CrearJuegos(LoginRequiredMixin, CreateView):
+       model= Juego
+       form_class= JuegosForm
+       template_name= "AppEntrega/juegos.html"
+       success_url = reverse_lazy("Juego_lista")
+
+
+class JuegoDetailView(DetailView):
+       model = Juego
+       template_name = "AppEntrega/detalleJuegos.html"  # Ruta a la plantilla de detalles
+       context_object_name = 'juego'  # Nombre del objeto en el contexto
+
+class ActualizarJuegos(LoginRequiredMixin, UpdateView):
+       model= Juego
+       form_class= JuegosForm
+       template_name= "AppEntrega/juegos.html"
+       success_url = reverse_lazy("Juego_lista")
+
+class BorrarJuegos(LoginRequiredMixin, DeleteView):
+     model= Juego
+     template_name = 'AppEntrega/borrar_Juegos.html'
+     success_url = reverse_lazy('Juego_lista')    

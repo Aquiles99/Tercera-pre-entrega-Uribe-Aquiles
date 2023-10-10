@@ -1,0 +1,29 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+{% for libro in libros %}
+  <div>
+    <h2>{{ libro.titulo }}</h2>
+    <p>Descripción: {{ libro.autor }}</p>
+    <p>Descripción: {{ libro.genero}}</p>
+    <p>Precio: ${{ libro.precio }}</p>
+    {% if libro.imagen %}
+      <img src="{{ libro.imagen.url }}" alt="{{ libro.titulo }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    <a href="{% url 'Detalle_libro' libro.id %}">Ver detalles</a>
+
+        <!-- Botón para editar -->
+    <a href="{% url 'Actualizar_libro' libro.id %}">Editar</a>
+
+        <!-- Botón para eliminar -->
+    <a href="{% url 'Eliminar_libro' libro.id %}">Eliminar</a>
+
+
+  </div>
+{% endfor %}
+
+{% endblock %}

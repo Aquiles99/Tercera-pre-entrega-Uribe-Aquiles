@@ -1,0 +1,21 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+
+  <div>
+    <h2>{{ juego.nombre }}</h2>
+    <p>Descripción: {{ juego.marca }}</p>
+    <p>Precio: ${{ juego.precio }}</p>
+    {% if jeugo.imagen %}
+      <img src="{{ juego.imagen.url }}" alt="{{ juego.nombre }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    
+
+  </div>
+
+
+{% endblock %}

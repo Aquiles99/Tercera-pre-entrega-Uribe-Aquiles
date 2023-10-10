@@ -1,0 +1,29 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+{% for manga in mangas %}
+  <div>
+    <h2>{{ manga.titulo }}</h2>
+    <p>Descripción: {{ manga.autor }}</p>
+    <p>Descripción: {{ manga.genero}}</p>
+    <p>Precio: ${{ manga.precio }}</p>
+    {% if manga.imagen %}
+      <img src="{{ manga.imagen.url }}" alt="{{ manga.titulo }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    <a href="{% url 'Detalle_manga' manga.id %}">Ver detalles</a>
+
+        <!-- Botón para editar -->
+    <a href="{% url 'Actualizar_manga' manga.id %}">Editar</a>
+
+        <!-- Botón para eliminar -->
+    <a href="{% url 'Eliminar_manga' manga.id %}">Eliminar</a>
+
+
+  </div>
+{% endfor %}
+
+{% endblock %}

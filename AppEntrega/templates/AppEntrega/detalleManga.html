@@ -1,0 +1,22 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+
+  <div>
+    <h2>{{ manga.titulo }}</h2>
+    <p>Descripción: {{ manga.autor }}</p>
+    p>Descripción: {{ manga.genero}}</p>
+    <p>Precio: ${{ manga.precio }}</p>
+    {% if manga.imagen %}
+      <img src="{{ manga.imagen.url }}" alt="{{ manga.titulo }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    
+
+  </div>
+
+
+{% endblock %}

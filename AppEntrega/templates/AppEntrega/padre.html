@@ -23,8 +23,9 @@
                 <a class="navbar-brand" href="{% url 'Inicio' %}">Inicio</a>
                 <a class="navbar-brand" href="{% url 'AgregarAvatar' %}">Agregar Avatar</a>
                 <a class="navbar-brand" href="{% url 'Libros' %}">Libros</a>
-                <a class="navbar-brand" href="{% url 'Sucursales' %}">Sucursales</a>
-                <a class="navbar-brand" href="{% url 'Contacto' %}">Contacto</a>
+                <a class="navbar-brand" href="{% url 'Mangas' %}">Mangas</a>
+                <a class="navbar-brand" href="{% url 'Figuras' %}">Figuras</a>
+                <a class="navbar-brand" href="{% url 'Juegos' %}">Juegos</a>
                 <a class="navbar-brand" href="{% url 'buscarLibro'%}">Buscar</a>
             
                 
@@ -42,8 +43,8 @@
                 <!-- Coloca aquí el contenido para usuarios registrados -->
                 {% else %}
                 <p>Por favor, inicia sesión o regístrate para acceder a nuestro sitio.</p>
-                <a class="navbar-brand" href="{% url 'Crear_cuenta'%}">Crear Cuenta</a>
-                <a class="btn btn-primary" href="login">Login</a>
+                <a class="navbar-brand" href="{% url 'Register'%}">Crear Cuenta</a>
+                <a class="btn btn-primary" href="{% url 'Login' %}">Login</a>
                 <!-- Coloca aquí el contenido para usuarios no registrados -->
                 {% endif %}
 

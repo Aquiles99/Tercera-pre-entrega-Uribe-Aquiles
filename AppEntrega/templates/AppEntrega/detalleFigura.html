@@ -1,0 +1,21 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+
+  <div>
+    <h2>{{ figura.nombre }}</h2>
+    <p>Descripción: {{ figura.marca }}</p>
+    <p>Precio: ${{ figura.precio }}</p>
+    {% if figura.imagen %}
+      <img src="{{ figura.imagen.url }}" alt="{{ figura.nombre }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    
+
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
+
+
+
+
+  <div>
+    <h2>{{ libro.titulo }}</h2>
+    <p>Descripción: {{ libro.autor }}</p>
+    p>Descripción: {{ libro.genero}}</p>
+    <p>Precio: ${{ libro.precio }}</p>
+    {% if libro.imagen %}
+      <img src="{{ libro.imagen.url }}" alt="{{ libro.titulo }}"width="100px" height="100px">
+      
+    {% endif %}
+
+    
+
+  </div>
+
+
+{% endblock %}
