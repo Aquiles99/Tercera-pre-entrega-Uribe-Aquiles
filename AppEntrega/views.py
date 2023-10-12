@@ -25,11 +25,13 @@ def inicio(request):
 
 
 # LIBROS
+@login_required
 def buscarLibro(request):
 
     return render(request, "AppEntrega/buscarLibro.html")
 
 
+@login_required
 def buscar(request):
     if request.GET["titulo"]:
 
