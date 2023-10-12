@@ -11,7 +11,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 #MI BLOG PERSONAL
 def mi_vista(request):
-    return render(request, 'mi_template.html')
+    return render(request, 'AppEntrega/mi_template.html')
 
 # Crear tus vistas aquí.
 
@@ -89,6 +89,15 @@ class LibroDetailView(DetailView):
       model = Libro
       template_name = "AppEntrega/detalleLibro.html"  # Ruta a la plantilla de detalles
       context_object_name = 'libro'  # Nombre del objeto en el contexto
+      def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        content_type_id = ContentType.objects.get_for_model(Libro).id
+        object_id = self.object.id
+        context['content_type_id'] = content_type_id
+        context['object_id'] = object_id
+        context['comment_form'] = CommentForm()
+        context['comments'] = self.object.comments.all()
+        return context
 
 class ActualizarLibros(LoginRequiredMixin, UpdateView):
       model= Libro
@@ -118,6 +127,15 @@ class MangaDetailView(DetailView):
        model = Manga
        template_name = "AppEntrega/detalleManga.html"  # Ruta a la plantilla de detalles
        context_object_name = 'manga'  # Nombre del objeto en el contexto
+       def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        content_type_id = ContentType.objects.get_for_model(Manga).id
+        object_id = self.object.id
+        context['content_type_id'] = content_type_id
+        context['object_id'] = object_id
+        context['comment_form'] = CommentForm()
+        context['comments'] = self.object.comments.all()
+        return context
 
 class ActualizarMangas(LoginRequiredMixin, UpdateView):
        model= Manga
@@ -147,6 +165,15 @@ class FiguraDetailView(DetailView):
        model = Figura
        template_name = "AppEntrega/detalleFigura.html"  # Ruta a la plantilla de detalles
        context_object_name = 'figura'  # Nombre del objeto en el contexto
+       def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        content_type_id = ContentType.objects.get_for_model(Figura).id
+        object_id = self.object.id
+        context['content_type_id'] = content_type_id
+        context['object_id'] = object_id
+        context['comment_form'] = CommentForm()
+        context['comments'] = self.object.comments.all()
+        return context
 
 class ActualizarFiguras(LoginRequiredMixin, UpdateView):
        model= Figura
@@ -176,6 +203,15 @@ class JuegoDetailView(DetailView):
        model = Juego
        template_name = "AppEntrega/detalleJuegos.html"  # Ruta a la plantilla de detalles
        context_object_name = 'juego'  # Nombre del objeto en el contexto
+       def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        content_type_id = ContentType.objects.get_for_model(Juego).id
+        object_id = self.object.id
+        context['content_type_id'] = content_type_id
+        context['object_id'] = object_id
+        context['comment_form'] = CommentForm()
+        context['comments'] = self.object.comments.all()
+        return context
 
 class ActualizarJuegos(LoginRequiredMixin, UpdateView):
        model= Juego
@@ -187,3 +223,26 @@ class BorrarJuegos(LoginRequiredMixin, DeleteView):
      model= Juego
      template_name = 'AppEntrega/borrar_Juegos.html'
      success_url = reverse_lazy('Juego_lista')    
+
+
+def create_comment(request, content_type_id, object_id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            content_type = ContentType.objects.get_for_id(content_type_id)
+            comment = Comment(
+                content=form.cleaned_data['content'],
+                user=request.user,
+                content_type=content_type,
+                object_id=object_id
+            )
+            comment.save() #Detalle_libro
+            detail_view_name = f"Detalle_{content_type.model}"
+
+            return redirect(detail_view_name, object_id)
+        
+    content_type = ContentType.objects.get_for_id(content_type_id)
+
+    detail_template_name = f"detalle{content_type.model}.html"
+
+    return render(request, detail_template_name, {'comment_form': CommentForm()})

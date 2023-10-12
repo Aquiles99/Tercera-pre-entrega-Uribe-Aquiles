@@ -25,8 +25,10 @@ class JuegosForm(forms.ModelForm):
         model = Juego
         fields = ['nombre', 'marca', 'imagen', 'precio']  
 
-
-
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 
 

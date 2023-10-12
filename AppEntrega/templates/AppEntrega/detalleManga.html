@@ -7,7 +7,7 @@
   <div>
     <h2>{{ manga.titulo }}</h2>
     <p>Descripción: {{ manga.autor }}</p>
-    p>Descripción: {{ manga.genero}}</p>
+    <p>Descripción: {{ manga.genero}}</p>
     <p>Precio: ${{ manga.precio }}</p>
     {% if manga.imagen %}
       <img src="{{ manga.imagen.url }}" alt="{{ manga.titulo }}"width="100px" height="100px">
@@ -18,5 +18,25 @@
 
   </div>
 
+  <h2>Comentarios</h2>
+  <form method="post" action="{% url 'create_comment' content_type_id object_id %}">
+      {% csrf_token %}
+      {{ comment_form.content.label_tag }}
+      {{ comment_form.content }}
+      <input type="submit" value="Comentar">
+  </form>
+
+  <ul>
+    {% for comment in comments %}
+        <li>
+            <p>{{ comment.content }}</p>
+            <p>Por: {{ comment.user }}</p>
+            <p>Fecha: {{ comment.created_at }}</p>
+        </li>
+    {% empty %}
+        <li>No hay comentarios aún.</li>
+    {% endfor %}
+
+</ul>
 
 {% endblock %}

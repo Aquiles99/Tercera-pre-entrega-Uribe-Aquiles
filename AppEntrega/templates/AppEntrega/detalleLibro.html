@@ -18,5 +18,25 @@
 
   </div>
 
+  <h2>Comentarios</h2>
+  <form method="post" action="{% url 'create_comment' content_type_id object_id %}">
+      {% csrf_token %}
+      {{ comment_form.content.label_tag }}
+      {{ comment_form.content }}
+      <input type="submit" value="Comentar">
+  </form>
+
+  <!-- Mostrar los comentarios existentes -->
+  <ul>
+      {% for comment in comments %}
+          <li>
+              <p>{{ comment.content }}</p>
+              <p>Por: {{ comment.user }}</p>
+              <p>Fecha: {{ comment.created_at }}</p>
+          </li>
+      {% empty %}
+          <li>No hay comentarios aún.</li>
+      {% endfor %}
+  </ul>
 
 {% endblock %}

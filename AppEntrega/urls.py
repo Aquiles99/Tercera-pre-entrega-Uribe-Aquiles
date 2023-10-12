@@ -6,6 +6,7 @@ from django.contrib.auth.views import LogoutView
   
 urlpatterns = [
     path("", views.inicio, name="Inicio"),
+    path("mi_vista", views.mi_vista, name="Mi vista"),
     path("libros", views.CrearLibros.as_view(), name="Libros"),
     path("libros_lista", views.ListaLibros.as_view(), name="Libros_lista"),
     path("detalle_libro/<int:pk>/", views.LibroDetailView.as_view(), name="Detalle_libro"),
@@ -28,7 +29,9 @@ urlpatterns = [
     path("eliminar_juego/<int:pk>/", views.BorrarJuegos.as_view(), name="Eliminar_juego"),
     path("busqueda", views.buscarLibro, name="buscarLibro"),
     path("buscar/", views.buscar, name="buscar"),
-    
+        # Vista para crear comentarios
+    path('comment/create/<int:content_type_id>/<int:object_id>/',
+         views.create_comment, name='create_comment'),
 
 
 
