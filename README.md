@@ -12,3 +12,7 @@ Cambiar la contraseña de Usuario
 Cerrar Sesión
 Login en caso de haber cerrado sesión
 Nota: La opción de editar y eliminar publicaciones solo le está permitido al autor de la publicación.
+
+
+Video del proyecto
+https://www.loom.com/share/58d45f4753714dd3a39c217d895f9338

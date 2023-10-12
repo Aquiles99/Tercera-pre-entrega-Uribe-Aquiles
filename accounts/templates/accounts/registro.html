@@ -1,3 +1,5 @@
+{% extends "AppEntrega/padre.html" %}
+{% block contenidoQueCambia %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -13,13 +15,16 @@
     <title>Document</title>
 
 </head>
+
 <body>
 
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Registrate!</button>
-        
+
     </form>
 </body>
+
 </html>
+{% endblock %}

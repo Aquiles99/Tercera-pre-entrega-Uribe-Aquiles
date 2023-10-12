@@ -5,19 +5,19 @@
 
 <body style="background-color: rgb(0, 255, 119);">
 
-<form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
+    <form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
 
-    <table>
+        <table>
 
-        {{ form.as_table }}
-    </table>
-<input type="submit", value="Enviar">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" , value="Enviar">
 
-</form>
+    </form>
 
-<h1>Libros</h1>
-<p>Libros que te pueden interesar</p>
-
+    <h1>Libros</h1>
+    <p>Libros que te pueden interesar</p>
+    <a href="{% url 'Libros_lista' %}" class="btn btn-secondary">Publicaciones</a>
 </body>
 
 {% endblock %}

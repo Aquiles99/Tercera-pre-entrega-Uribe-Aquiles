@@ -27,13 +27,13 @@
         <div class="container">
             <a class="navbar-brand" href="{% url 'Inicio' %}">Inicio</a>
             <a class="navbar-brand" href="{% url 'Mi vista' %}"> Acerca de mi</a>
-            <a class="navbar-brand" href="{% url 'AgregarAvatar' %}">Agregar Avatar</a>
             <a class="navbar-brand" href="{% url 'Libros' %}">Libros</a>
             <a class="navbar-brand" href="{% url 'Mangas' %}">Mangas</a>
             <a class="navbar-brand" href="{% url 'Figuras' %}">Figuras</a>
             <a class="navbar-brand" href="{% url 'Juegos' %}">Juegos</a>
             <a class="navbar-brand" href="{% url 'buscarLibro'%}">Buscar</a>
-
+            <a class="navbar-brand" href="{% url 'EditarPerfil' %}">Editar Perfil</a>
+            <a class="navbar-brand" href="{% url 'AgregarAvatar' %}">Agregar Avatar</a>
 
 
             {% if request.user.is_authenticated %}

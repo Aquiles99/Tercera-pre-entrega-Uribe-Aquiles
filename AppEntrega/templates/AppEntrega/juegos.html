@@ -5,18 +5,19 @@
 
 <body style="background-color: rgb(255, 136, 0);">
 
-<form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
+    <form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
 
-    <table>
+        <table>
 
-        {{ form.as_table }}
-    </table>
-<input type="submit", value="Enviar">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" , value="Enviar">
 
-</form>
+    </form>
 
-<h1>Juegos</h1>
-<p>Juegos que te pueden interesar</p>
+    <h1>Juegos</h1>
+    <p>Juegos que te pueden interesar</p>
+    <a href="{% url 'Juego_lista' %}" class="btn btn-secondary">Publicaciones</a>
 
 </body>
 

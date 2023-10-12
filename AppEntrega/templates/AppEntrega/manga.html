@@ -5,19 +5,19 @@
 
 <body style="background-color: rgb(197, 20, 251);">
 
-<form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
+    <form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
 
-    <table>
+        <table>
 
-        {{ form.as_table }}
-    </table>
-<input type="submit", value="Enviar">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" , value="Enviar">
 
-</form>
+    </form>
 
-<h1>Mangas</h1>
-<p>Mangas que te pueden interesar</p>
-
+    <h1>Mangas</h1>
+    <p>Lista de mangas que te pueden interesar</p>
+    <a href="{% url 'Manga_lista' %}" class="btn btn-secondary">Publicaciones</a>
 </body>
 
 {% endblock %}

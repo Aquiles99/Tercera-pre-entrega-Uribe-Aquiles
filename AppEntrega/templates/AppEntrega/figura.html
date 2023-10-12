@@ -5,18 +5,19 @@
 
 <body style="background-color: rgb(46, 126, 253);">
 
-<form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
+    <form action="" method="POST" enctype="multipart/form-data">{% csrf_token%}
 
-    <table>
+        <table>
 
-        {{ form.as_table }}
-    </table>
-<input type="submit", value="Enviar">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" , value="Enviar">
 
-</form>
+    </form>
 
-<h1>Figuras</h1>
-<p>Figuras que te pueden interesar</p>
+    <h1>Figuras</h1>
+    <p>Figuras que te pueden interesar</p>
+    <a href="{% url 'Figura_lista' %}" class="btn btn-secondary">Publicaciones</a>
 
 </body>
 
