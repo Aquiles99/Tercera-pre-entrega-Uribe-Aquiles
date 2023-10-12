@@ -1,10 +1,14 @@
-# 3ra pre-entrega / Uribe Aquiles.
+Página Web destinada a usuarios que deseen vender o comprar libros
 
-El proyecto se basa en una libreria virtual.
-El proyecto cuenta con 5 modelos, cada uno de los modelos tiene su propio formulario y 1 un sistema de busqueda de titulos de libros. Se pueden utilizar todos los botones del navbar.
-Para ejecutar el proyecto, es necesario abrir el repositorio con los siguientes comandos:
-```bash
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
-```
+A fin de navegar por las secciones de la página web, el usuario debera iniciar sesión o registrarse en caso de no contar con usuario o contraseña. En ambas opciones, una vez la página valide la autenticación del usuario, este será redirigido al inicio de la página web.
+
+Los usuarios pueden realizar las siguientes accciones:
+
+Publicar libros, mangas, figuras y juegos.
+Visualizar publicaciones de otros usuarios.
+Comentar las publicaciones.
+Editar el perfil de Usuario
+Cambiar la contraseña de Usuario
+Cerrar Sesión
+Login en caso de haber cerrado sesión
+Nota: La opción de editar y eliminar publicaciones solo le está permitido al autor de la publicación.
