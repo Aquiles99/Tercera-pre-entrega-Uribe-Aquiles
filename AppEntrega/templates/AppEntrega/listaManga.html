@@ -4,26 +4,26 @@
 
 
 {% for manga in mangas %}
-  <div>
-    <h2>{{ manga.titulo }}</h2>
-    <p>Descripción: {{ manga.autor }}</p>
-    <p>Descripción: {{ manga.genero}}</p>
-    <p>Precio: ${{ manga.precio }}</p>
-    {% if manga.imagen %}
-      <img src="{{ manga.imagen.url }}" alt="{{ manga.titulo }}"width="100px" height="100px">
-      
-    {% endif %}
+<div>
+  <h2>{{ manga.titulo }}</h2>
+  <p>Descripción: {{ manga.autor }}</p>
+  <p>Descripción: {{ manga.genero}}</p>
+  <p>Precio: ${{ manga.precio }}</p>
+  {% if manga.imagen %}
+  <img src="{{ manga.imagen.url }}" alt="{{ manga.titulo }}" width="100px" height="100px">
 
-    <a href="{% url 'Detalle_manga' manga.id %}">Ver detalles</a>
+  {% endif %}
 
-        <!-- Botón para editar -->
-    <a href="{% url 'Actualizar_manga' manga.id %}">Editar</a>
+  <a href="{% url 'Detalle_manga' manga.id %}">Ver detalles</a>
+  {% if manga.user == user %}
+  <!-- Botón para editar -->
+  <a href="{% url 'Actualizar_manga' manga.id %}">Editar</a>
 
-        <!-- Botón para eliminar -->
-    <a href="{% url 'Eliminar_manga' manga.id %}">Eliminar</a>
+  <!-- Botón para eliminar -->
+  <a href="{% url 'Eliminar_manga' manga.id %}">Eliminar</a>
+  {% endif %}
 
-
-  </div>
+</div>
 {% endfor %}
 
 {% endblock %}

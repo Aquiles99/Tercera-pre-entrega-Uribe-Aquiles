@@ -4,25 +4,26 @@
 
 
 {% for figura in figuras %}
-  <div>
-    <h2>{{ figura.nombre }}</h2>
-    <p>Descripción: {{ figura.marca }}</p>
-    <p>Precio: ${{ figura.precio }}</p>
-    {% if figura.imagen %}
-      <img src="{{ figura.imagen.url }}" alt="{{ figura.titulo }}"width="100px" height="100px">
-      
-    {% endif %}
+<div>
+  <h2>{{ figura.nombre }}</h2>
+  <p>Descripción: {{ figura.marca }}</p>
+  <p>Precio: ${{ figura.precio }}</p>
+  {% if figura.imagen %}
+  <img src="{{ figura.imagen.url }}" alt="{{ figura.titulo }}" width="100px" height="100px">
 
-    <a href="{% url 'Detalle_figura' figura.id %}">Ver detalles</a>
+  {% endif %}
 
-        <!-- Botón para editar -->
-    <a href="{% url 'Actualizar_figura' figura.id %}">Editar</a>
+  <a href="{% url 'Detalle_figura' figura.id %}">Ver detalles</a>
+  {% if figura.user == user %}
 
-        <!-- Botón para eliminar -->
-    <a href="{% url 'Eliminar_figura' figura.id %}">Eliminar</a>
+  <!-- Botón para editar -->
+  <a href="{% url 'Actualizar_figura' figura.id %}">Editar</a>
 
+  <!-- Botón para eliminar -->
+  <a href="{% url 'Eliminar_figura' figura.id %}">Eliminar</a>
+  {% endif %}
 
-  </div>
+</div>
 {% endfor %}
 
 {% endblock %}

@@ -1,27 +1,12 @@
-<!DOCTYPE html>
+{% extends "AppEntrega/padre.html" %}
 
-<html lang="en">
+{% block contenidoQueCambia %}
+<form action="{% url 'Login' %}" method="POST">
 
-<head>
+    {% csrf_token %}
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {{ form.as_p }}
 
-</head>
-
-<body>
-
-    <form action="{% url 'Login' %}" method="POST">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-        <button type="submit">Inciar sesion</button>
-    </form>
-
-</body>
-
-</html>
+    <button type="submit">Inciar sesion</button>
+</form>
+{% endblock %}

@@ -36,9 +36,6 @@ secret_key.txt
 # Ignore database migrations, as they can be regenerated
 **/migrations/
 
-# Ignore compiled JavaScript and CSS
-*.js
-*.css
 
 # Ignore compiled binary files
 *.exe

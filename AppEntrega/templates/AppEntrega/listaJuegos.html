@@ -4,26 +4,26 @@
 
 
 {% for juego in juegos %}
-  <div>
-    <h2>{{ juego.nombre }}</h2>
-    <p>Descripción: {{ juego.marca }}</p>
-    <p>Descripción: {{ juego.genero}}</p>
-    <p>Precio: ${{ juego.precio }}</p>
-    {% if juego.imagen %}
-      <img src="{{ juego.imagen.url }}" alt="{{ juego.nombre }}"width="100px" height="100px">
-      
-    {% endif %}
+<div>
+  <h2>{{ juego.nombre }}</h2>
+  <p>Descripción: {{ juego.marca }}</p>
+  <p>Descripción: {{ juego.genero}}</p>
+  <p>Precio: ${{ juego.precio }}</p>
+  {% if juego.imagen %}
+  <img src="{{ juego.imagen.url }}" alt="{{ juego.nombre }}" width="100px" height="100px">
 
-    <a href="{% url 'Detalle_juego' juego.id %}">Ver detalles</a>
+  {% endif %}
 
-        <!-- Botón para editar -->
-    <a href="{% url 'Actualizar_juego' juego.id %}">Editar</a>
+  <a href="{% url 'Detalle_juego' juego.id %}">Ver detalles</a>
+  {% if juego.user == user %}
+  <!-- Botón para editar -->
+  <a href="{% url 'Actualizar_juego' juego.id %}">Editar</a>
 
-        <!-- Botón para eliminar -->
-    <a href="{% url 'Eliminar_juego' juego.id %}">Eliminar</a>
+  <!-- Botón para eliminar -->
+  <a href="{% url 'Eliminar_juego' juego.id %}">Eliminar</a>
+  {% endif %}
 
-
-  </div>
+</div>
 {% endfor %}
 
 {% endblock %}
